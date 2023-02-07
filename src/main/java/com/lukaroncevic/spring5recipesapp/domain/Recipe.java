@@ -2,6 +2,8 @@ package com.lukaroncevic.spring5recipesapp.domain;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Recipe {
 
@@ -18,6 +20,9 @@ public class Recipe {
     private String directions;
     //to do
     //private Difficulty difficulty;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredientSet;
 
     @Lob
     private Byte[] image;
