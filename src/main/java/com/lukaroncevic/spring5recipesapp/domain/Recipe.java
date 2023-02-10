@@ -2,6 +2,7 @@ package com.lukaroncevic.spring5recipesapp.domain;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,10 +18,12 @@ public class Recipe {
     private Integer serving;
     private String source;
     private String url;
+
+    @Lob
     private String directions;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredientSet;
+    private Set<Ingredient> ingredient =  new HashSet<>();
 
     @Lob
     private Byte[] image;
@@ -34,7 +37,7 @@ public class Recipe {
     @ManyToMany
     @JoinTable(name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -116,12 +119,12 @@ public class Recipe {
         this.notes = notes;
     }
 
-    public Set<Ingredient> getIngredientSet() {
-        return ingredientSet;
+    public Set<Ingredient> getIngredients() {
+        return ingredient;
     }
 
-    public void setIngredientSet(Set<Ingredient> ingredientSet) {
-        this.ingredientSet = ingredientSet;
+    public void setIngredients(Set<Ingredient> ingredient) {
+        this.ingredient = ingredient;
     }
 
     public Difficulty getDifficulty() {
