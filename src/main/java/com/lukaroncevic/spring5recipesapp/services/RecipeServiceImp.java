@@ -1,9 +1,13 @@
 package com.lukaroncevic.spring5recipesapp.services;
 
+import com.lukaroncevic.spring5recipesapp.commands.RecipeCommand;
+import com.lukaroncevic.spring5recipesapp.converters.RecipeCommandsToRecipe;
+import com.lukaroncevic.spring5recipesapp.converters.RecipeToRecipeCommand;
 import com.lukaroncevic.spring5recipesapp.domain.Recipe;
 import com.lukaroncevic.spring5recipesapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -14,9 +18,14 @@ import java.util.Set;
 public class RecipeServiceImp implements RecipeService{
 
     private final RecipeRepository recipeRepository;
+    private final RecipeCommandsToRecipe recipeCommandsToRecipe;
+    private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-    public RecipeServiceImp(RecipeRepository recipeRepository) {
+    public RecipeServiceImp(RecipeRepository recipeRepository, RecipeCommandsToRecipe recipeCommandsToRecipe,
+                            RecipeToRecipeCommand recipeToRecipeCommand) {
         this.recipeRepository = recipeRepository;
+        this.recipeCommandsToRecipe = recipeCommandsToRecipe;
+        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Override
@@ -38,5 +47,15 @@ public class RecipeServiceImp implements RecipeService{
         }
 
         return recipeOptional.get();
+    }
+
+    @Override
+    @Transactional
+    public RecipeCommand savedRecipeCommand(RecipeCommand command){
+        Recipe detachedRecipe = recipeCommandsToRecipe.convert(command);
+
+        Recipe savedRecipe = recipeRepository.save(detachedRecipe);
+        log.debug("Saved RecipeId:" + savedRecipe.getId());
+        return recipeToRecipeCommand.convert(savedRecipe);
     }
 }
