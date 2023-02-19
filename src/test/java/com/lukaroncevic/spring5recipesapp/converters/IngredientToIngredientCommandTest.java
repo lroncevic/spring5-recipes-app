@@ -1,9 +1,7 @@
 package com.lukaroncevic.spring5recipesapp.converters;
 
 import com.lukaroncevic.spring5recipesapp.commands.IngredientCommand;
-import com.lukaroncevic.spring5recipesapp.commands.UnitOfMeasureCommand;
 import com.lukaroncevic.spring5recipesapp.domain.Ingredient;
-import com.lukaroncevic.spring5recipesapp.domain.Recipe;
 import com.lukaroncevic.spring5recipesapp.domain.UnitOfMeasure;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,8 +49,8 @@ class IngredientToIngredientCommandTest {
 
         //then
         assertEquals(ID_VALUE, ingredientCommand.getId());
-        assertNotNull(ingredientCommand.getUnitOfMeasure());
-        assertEquals(UOM_ID, ingredientCommand.getUnitOfMeasure().getId());
+        assertNotNull(ingredientCommand.getUom());
+        assertEquals(UOM_ID, ingredientCommand.getUom().getId());
         assertEquals(AMOUNT, ingredientCommand.getAmount());
         assertEquals(DESCRIPTION, ingredientCommand.getDescription());
     }
@@ -71,7 +69,7 @@ class IngredientToIngredientCommandTest {
 
         //then
         assertEquals(ID_VALUE, ingredientCommand.getId());
-        assertNull(ingredientCommand.getUnitOfMeasure());
+        assertNull(ingredientCommand.getUom());
         assertEquals(AMOUNT, ingredientCommand.getAmount());
         assertEquals(DESCRIPTION, ingredientCommand.getDescription());
     }

@@ -1,7 +1,6 @@
 package com.lukaroncevic.spring5recipesapp.converters;
 
 import com.lukaroncevic.spring5recipesapp.commands.IngredientCommand;
-import com.lukaroncevic.spring5recipesapp.commands.UnitOfMeasureCommand;
 import com.lukaroncevic.spring5recipesapp.domain.Ingredient;
 import jakarta.annotation.Nullable;
 import lombok.Synchronized;
@@ -29,7 +28,7 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
         ingredient.setId(source.getId());
         ingredient.setDescription(source.getDescription());
         ingredient.setAmount(source.getAmount());
-        ingredient.setUom(uomConverter.convert(source.getUnitOfMeasure()));
+        ingredient.setUom(uomConverter.convert(source.getUom()));
         return ingredient;
     }
 }

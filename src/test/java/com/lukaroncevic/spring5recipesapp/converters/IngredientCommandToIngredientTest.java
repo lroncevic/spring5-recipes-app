@@ -3,10 +3,8 @@ package com.lukaroncevic.spring5recipesapp.converters;
 import com.lukaroncevic.spring5recipesapp.commands.IngredientCommand;
 import com.lukaroncevic.spring5recipesapp.commands.UnitOfMeasureCommand;
 import com.lukaroncevic.spring5recipesapp.domain.Ingredient;
-import com.lukaroncevic.spring5recipesapp.domain.Recipe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Null;
 
 import java.math.BigDecimal;
 
@@ -45,7 +43,7 @@ class IngredientCommandToIngredientTest {
         ingredientCommand.setAmount(AMOUNT);
         UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
         unitOfMeasureCommand.setId(UOM_ID);
-        ingredientCommand.setUnitOfMeasure(unitOfMeasureCommand);
+        ingredientCommand.setUom(unitOfMeasureCommand);
 
         //when
         Ingredient ingredient = converter.convert(ingredientCommand);
