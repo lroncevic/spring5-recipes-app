@@ -2,11 +2,17 @@ package com.lukaroncevic.spring5recipesapp.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+//@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Recipe {
 
@@ -48,7 +54,7 @@ public class Recipe {
         }
     }
 
-    public Recipe addingIngredient(Ingredient ingredient){
+    public Recipe addIngredient(Ingredient ingredient){
         ingredient.setRecipe(this);
         this.ingredient.add(ingredient);
         return this;
