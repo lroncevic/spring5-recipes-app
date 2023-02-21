@@ -3,7 +3,8 @@ package com.lukaroncevic.spring5recipesapp.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Setter
+@Getter
 @EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes {

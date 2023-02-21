@@ -6,7 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
-@Data
+@Setter
+@Getter
 @Entity
 public class UnitOfMeasure {
 

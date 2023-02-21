@@ -10,8 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 //@Data
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @Entity
 public class Recipe {
