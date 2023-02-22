@@ -9,6 +9,8 @@ import com.lukaroncevic.spring5recipesapp.domain.Ingredient;
 import com.lukaroncevic.spring5recipesapp.domain.Recipe;
 import com.lukaroncevic.spring5recipesapp.repositories.RecipeRepository;
 import com.lukaroncevic.spring5recipesapp.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -20,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
+@Slf4j
 class IngredientServiceImpTest {
 
     private final IngredientToIngredientCommand ingredientToIngredientCommand;
@@ -46,11 +49,11 @@ class IngredientServiceImpTest {
     }
 
     @Test
-    public void findByRecipeIdAndId() throws Exception {
+    void findByRecipeIdAndId() throws Exception {
     }
 
     @Test
-     void findByRecipeIdAndRecipeIdHappyPath() throws Exception {
+    void findByRecipeIdAndRecipeIdHappyPath() throws Exception {
         //given
         Recipe recipe = new Recipe();
         recipe.setId(1L);
@@ -81,7 +84,7 @@ class IngredientServiceImpTest {
     }
 
     @Test
-    public void testSaveRecipeCommand() throws Exception {
+    void testSaveRecipeCommand() throws Exception {
         //given
         IngredientCommand command = new IngredientCommand();
         command.setId(3L);
@@ -101,6 +104,26 @@ class IngredientServiceImpTest {
 
         //then
         assertEquals(Long.valueOf(3L), savedCommand.getId());
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).save(any(Recipe.class));
+    }
+
+    @Test
+    public void testDeleteById() throws Exception {
+        //given
+        Recipe recipe = new Recipe();
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(3L);
+        recipe.addIngredient(ingredient);
+        ingredient.setRecipe(recipe);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        //when
+        ingredientService.deleteById(1L, 3L);
+
+        //then
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, times(1)).save(any(Recipe.class));
     }
