@@ -22,7 +22,7 @@
 <div class="container-fluid" style="margin-top: 20px">
   <div class="justify-content-center">
     <div class="col-md-6 offset-md-3">
-      <form  th:object="${recipe}" th:action="@{/recipe}"  method="post">
+      <form th:object="${recipe}" th:action="@{/recipe}" method="post">
         <input type="hidden" th:field="*{id}"/>
         <div class="panel-group">
           <div class="card mb-3">
@@ -66,7 +66,13 @@
                 </div>
                 <div class="col-md-3 form-group">
                   <label><b>Difficulty:</b></label>
-                  <select class="form-control">
+                  <select class="form-control" th:field="*{difficulty}">
+                    <option th:each="difficultyValue : ${T(com.lukaroncevic.spring5recipesapp.domain.Difficulty).values()}"
+                            th:value="${difficultyValue.name()}"
+                            th:text="${difficultyValue.name()}"
+                    >val</option>
+                  </select>
+                  <select class="form-control" th:remove="all">
                     <option>Easy</option>
                     <option>Medium</option>
                     <option>Hard</option>
@@ -96,7 +102,7 @@
                   <h2 class="card-title">Ingredients</h2>
                 </div>
                 <div class="col-md-1">
-                  <a class="btn btn-default" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
+                  <a class="btn btn-light" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
                 </div>
               </div>
             </div>
