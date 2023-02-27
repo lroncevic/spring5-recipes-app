@@ -3,6 +3,7 @@ package com.lukaroncevic.spring5recipesapp.services;
 import com.lukaroncevic.spring5recipesapp.converters.RecipeCommandsToRecipe;
 import com.lukaroncevic.spring5recipesapp.converters.RecipeToRecipeCommand;
 import com.lukaroncevic.spring5recipesapp.domain.Recipe;
+import com.lukaroncevic.spring5recipesapp.exceptions.NotFoundException;
 import com.lukaroncevic.spring5recipesapp.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,5 +78,21 @@ class RecipeServiceImpTest {
 
         //then
         verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    public void testGetRecipeByIdTestNotFound() throws Exception {
+        // given
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        // when
+        NotFoundException notFoundException = assertThrows(
+                NotFoundException.class, () -> recipeService.findById(1L),
+                "Expected exception to throw an error. But it didn't");
+
+        // then
+        assertTrue(notFoundException.getMessage().contains("Recipe Not Found"));
     }
 }

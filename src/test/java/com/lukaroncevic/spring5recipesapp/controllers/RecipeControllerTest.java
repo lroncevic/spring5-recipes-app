@@ -2,6 +2,7 @@ package com.lukaroncevic.spring5recipesapp.controllers;
 
 import com.lukaroncevic.spring5recipesapp.commands.RecipeCommand;
 import com.lukaroncevic.spring5recipesapp.domain.Recipe;
+import com.lukaroncevic.spring5recipesapp.exceptions.NotFoundException;
 import com.lukaroncevic.spring5recipesapp.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    public void testGetRecipe() throws Exception{
+    void testGetRecipe() throws Exception{
         Recipe recipe = new Recipe();
         recipe.setId(1L);
 
@@ -50,7 +51,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    public void testGetNewRecipeForm() throws Exception{
+    void testGetNewRecipeForm() throws Exception{
         RecipeCommand command = new RecipeCommand();
 
         mockMvc.perform(get("/recipe/new"))
@@ -60,7 +61,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    public void testPostNewRecipeForm() throws Exception {
+    void testPostNewRecipeForm() throws Exception {
         RecipeCommand command = new RecipeCommand();
         command.setId(2L);
 
@@ -76,7 +77,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    public void testGetUpdateView() throws Exception{
+    void testGetUpdateView() throws Exception{
         RecipeCommand command = new RecipeCommand();
         command.setId(2L);
 
@@ -89,11 +90,22 @@ class RecipeControllerTest {
     }
 
     @Test
-    public void testDeleteAction() throws Exception{
+    void testDeleteAction() throws Exception{
         mockMvc.perform(get("/recipe/1/delete"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
 
         verify(recipeService, times(1)).deleteById(anyLong());
         }
+
+    @Test
+    void testGetRecipeNotFound() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
+    }
 }
