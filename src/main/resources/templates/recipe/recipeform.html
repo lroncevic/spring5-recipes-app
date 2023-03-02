@@ -35,8 +35,8 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-3 form-group">
+                  <label th:text="#{recipe.description}">Recipe Description d:</label>
                   <input id="description" type="text" class="form-control" th:errorclass="is-invalid" th:field="*{description}" placeholder="description"/>
-                  <label for="description">Recipe Description</label>
                   <div class="invalid-feedback">
                     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" />
                   </div>
@@ -65,7 +65,6 @@
                 <div class="col-md-3 form-group">
                   <label><b>Prep Time:</b></label>
                   <input id="prepTime" type="text" class="form-control" th:errorclass="is-invalid" th:field="*{prepTime}" placeholder="prepTime"/>
-                  <label for="prepTime">Prep Time</label>
                   <div class="invalid-feedback">
                     <p th:if="${#fields.hasErrors('prepTime')}" th:errors="*{prepTime}" />
                   </div>
@@ -73,7 +72,6 @@
                 <div class="col-md-3 form-group">
                   <label><b>Cooktime:</b></label>
                   <input id="cookTime" type="text" class="form-control" th:errorclass="is-invalid" th:field="*{cookTime}" placeholder="cookTime"/>
-                  <label for="description">Cook Time</label>
                   <div class="invalid-feedback">
                     <p th:if="${#fields.hasErrors('cookTime')}" th:errors="*{cookTime}" />
                   </div>
@@ -98,7 +96,7 @@
                   <label><b>Servings:</b></label>
                   <input id="servings" type="text" class="form-control" th:errorclass="is-invalid" th:field="*{servings}"
                          placeholder="servings"/>
-                  <label for="servings">Servings</label>
+
                   <div class="invalid-feedback">
                     <p th:if="${#fields.hasErrors('servings')}" th:errors="*{servings}" />
                   </div>
@@ -111,7 +109,6 @@
                   <label><b>URL:</b></label>
                   <input id="url" type="text" class="form-control" th:errorclass="is-invalid" th:field="*{url}"
                          placeholder="url"/>
-                  <label for="url">Recipe Description</label>
                   <div class="invalid-feedback">
                     <p th:if="${#fields.hasErrors('url')}" th:errors="*{url}" />
                   </div>
